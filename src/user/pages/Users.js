@@ -7,7 +7,7 @@ const Users = () => {
       id: 'u1',
       name: 'Nikki Sato',
       image:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fdogtime.com%2Fdog-breeds%2Fpembroke-welsh-corgi&psig=AOvVaw0yX6urqbWGzORnxTouAe2Z&ust=1600974149829000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJDF0M77_-sCFQAAAAAdAAAAABAF',
+        'https://static.boredpanda.com/blog/wp-content/uploads/2020/08/1-5f2a6456cccf0__700.jpg',
       places: 3,
     },
   ];
