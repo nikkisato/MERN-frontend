@@ -5,6 +5,7 @@ import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal.js';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner.js';
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -111,6 +112,10 @@ const Auth = () => {
               onInput={inputHandler}
             />
           )}
+
+          {!isLoginMode && (
+            <ImageUpload center id='image' onInput={inputHandler} />
+          )}
           <Input
             element='input'
             id='email'
@@ -120,6 +125,7 @@ const Auth = () => {
             errorText='Please enter a valid email address.'
             onInput={inputHandler}
           />
+
           <Input
             element='input'
             id='password'
