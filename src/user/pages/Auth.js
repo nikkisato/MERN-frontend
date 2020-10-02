@@ -5,6 +5,7 @@ import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal.js';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner.js';
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -39,6 +40,7 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -48,6 +50,10 @@ const Auth = () => {
           ...formState.inputs,
           name: {
             value: '',
+            isValid: false,
+          },
+          image: {
+            value: null,
             isValid: false,
           },
         },
@@ -75,17 +81,16 @@ const Auth = () => {
       } catch (err) {}
     } else {
       try {
+        const formData = new FormData();
+        formData.append('name', formState.inputs.name.value);
+        formData.append('email', formState.inputs.email.value);
+        formData.append('password', formState.inputs.password.value);
+        formData.append('image', formState.inputs.image.value);
+
         const responseData = await sendRequest(
           'http://localhost:5000/api/users/signup',
           'POST',
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            'Content-Type': 'application/json',
-          }
+          formData
         );
         auth.login(responseData.user.id);
       } catch (err) {}
@@ -111,6 +116,15 @@ const Auth = () => {
               onInput={inputHandler}
             />
           )}
+
+          {!isLoginMode && (
+            <ImageUpload
+              center
+              id='image'
+              onInput={inputHandler}
+              errorText='Please provide an image'
+            />
+          )}
           <Input
             element='input'
             id='email'
@@ -120,6 +134,7 @@ const Auth = () => {
             errorText='Please enter a valid email address.'
             onInput={inputHandler}
           />
+
           <Input
             element='input'
             id='password'
